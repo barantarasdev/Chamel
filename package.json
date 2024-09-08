@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "startNest": "npx nx serve deepthoughts",
-    "startWeb": "npx nx dev web",
-    "buildNest": "npx nx build deepthoughts",
-    "buildWeb": "npx nx build web"
+    "startNest": "cross-env NODE_ENV=development npx nx serve deepthoughts --configuration=development",
+    "startWeb": "cross-env NODE_ENV=development npx nx dev web --configuration=development",
+    "buildNest": "cross-env NODE_ENV=production npx nx build deepthoughts --configuration=production",
+    "buildWeb": "cross-env NODE_ENV=production npx nx build web --configuration=production"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.2",
@@ -15,6 +15,7 @@
     "@nestjs/swagger": "^7.4.0",
     "@prisma/client": "^5.19.1",
     "axios": "^1.6.0",
+    "dotenv": "^16.4.5",
     "next": "14.2.3",
     "pg": "^8.12.0",
     "react": "18.3.1",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
+    "@nrwl/webpack": "^19.6.5",
     "@nx/cypress": "19.6.5",
     "@nx/eslint": "19.6.5",
     "@nx/eslint-plugin": "19.6.5",
@@ -55,6 +57,7 @@
     "@typescript-eslint/parser": "^7.16.0",
     "babel-jest": "^29.7.0",
     "babel-plugin-styled-components": "1.10.7",
+    "cross-env": "^7.0.3",
     "cypress": "^13.13.0",
     "eslint": "~8.57.0",
     "eslint-config-next": "14.2.3",
