@@ -22,3 +22,8 @@ export type UpdateUserT = {
   dto: UpdateUserDTO;
   userId: string;
 };
+
+export type GetUserByEmail = {
+  id: string;
+  password: string;
+};

@@ -12,5 +12,20 @@ model User {
   email     String   @unique
   name      String
   password  String   @unique
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
+  token     Token[]
+}
+
+model Token {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  refreshToken String   @unique @map("refresh_token")
+  userId       String   @map("user_id") @db.Uuid
+  created_at   DateTime @default(now()) @map("created_at")
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Token_blacklist {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  token     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
 }
