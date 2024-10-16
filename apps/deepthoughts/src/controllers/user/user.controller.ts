@@ -7,7 +7,13 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserT } from '../../types/user';
 import { CreateUserDTO } from './dto/user-create.dto';
@@ -28,6 +34,7 @@ export class UserController {
 
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({ status: 201, type: UserT })
+  @ApiBody({ type: CreateUserDTO })
   @Post()
   createUser(@Body() dto: CreateUserDTO): Promise<UserT> {
     return this.userService.createUser(dto);
@@ -35,7 +42,8 @@ export class UserController {
 
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 200, type: UserT })
-  @ApiParam({ name: 'userId', required: true, description: 'User id' })
+  @ApiParam({ name: 'UpdateUserDTO', required: true, description: 'User id' })
+  @ApiBody({ type: CreateUserDTO })
   @Put('/:userId')
   updateTask(
     @Param('userId') userId: string,
