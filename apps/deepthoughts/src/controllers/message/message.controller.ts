@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -21,6 +22,8 @@ import { CreateMessageDTO } from './dto/message-create.dto';
 import { UpdateMessageDTO } from './dto/message-update.dto';
 import { MessageService } from './message.service';
 import { AccessTokenGuard } from '../../guards/acessToken.guard';
+import { messageValidation } from '@libs/validation';
+import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 
 @UseGuards(AccessTokenGuard)
 @ApiBearerAuth()
@@ -40,6 +43,7 @@ export class MessageController {
   @ApiOperation({ summary: 'Create message' })
   @ApiResponse({ status: 201, type: MessageT })
   @ApiBody({ type: CreateMessageDTO })
+  @UsePipes(new ZodValidationPipe(messageValidation.createMessageSchema))
   @Post()
   createMessage(@Body() dto: CreateMessageDTO): Promise<MessageT> {
     return this.messageService.createMessage(dto);
@@ -49,6 +53,7 @@ export class MessageController {
   @ApiResponse({ status: 200, type: MessageT })
   @ApiParam({ name: 'messageId', required: true, description: 'Message id' })
   @ApiBody({ type: UpdateMessageDTO })
+  @UsePipes(new ZodValidationPipe(messageValidation.updateMessageSchema))
   @Put('/:messageId')
   updateMessage(
     @Param('messageId') messageId: string,

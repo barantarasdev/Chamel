@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Post,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -22,6 +23,8 @@ import { SignUpDTO } from './dto/sign-up.dto';
 import { RefreshTokenGuard } from '../../guards/refreshToken.guard';
 import { User } from '../../decorators/user.decorator';
 import { UserD } from '../../types/decorators';
+import { authValidation } from '@libs/validation';
+import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -40,6 +43,7 @@ export class AuthController {
   @ApiOperation({ summary: 'signUp' })
   @ApiResponse({ status: 201, type: TokenT })
   @ApiBody({ type: SignUpDTO })
+  @UsePipes(new ZodValidationPipe(authValidation.signUpSchema))
   @Post('/signUp')
   signUp(@Body() dto: SignUpDTO): Promise<TokenT> {
     return this.authService.signUp(dto);
