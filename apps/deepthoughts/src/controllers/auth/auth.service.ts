@@ -1,4 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { SignInDTO } from './dto/sign-in.dto';
 import { TokenT } from '../../types/auth';
@@ -6,7 +12,6 @@ import { SignUpDTO } from './dto/sign-up.dto';
 import { errors } from '@libs/core';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { UserD } from '../../types/decorators';
 
 @Injectable()
 export class AuthService {
@@ -44,17 +49,13 @@ export class AuthService {
     const user = await this.databaseService.getUserByEmail(email);
 
     if (!user) {
-      console.log(errors.USER_DOES_NOT_EXISTS);
-
-      return;
+      throw new NotFoundException(errors.USER_DOES_NOT_EXISTS);
     }
 
     const passwordMatches = await bcrypt.compare(password, user.password);
 
     if (!passwordMatches) {
-      console.log(errors.INCORRECT_PASSWORD);
-
-      return;
+      throw new BadRequestException(errors.INCORRECT_PASSWORD);
     }
 
     const { accessToken, refreshToken } = await this.getTokens(user.id, email);
@@ -72,9 +73,7 @@ export class AuthService {
     const user = await this.databaseService.getUserByEmail(dto.email);
 
     if (user) {
-      console.log(errors.USER_ALREADY_EXISTS);
-
-      return;
+      throw new ConflictException(errors.USER_ALREADY_EXISTS);
     }
 
     const hashedPassword = await bcrypt.hash(
@@ -101,9 +100,7 @@ export class AuthService {
       await this.databaseService.getRefreshTokenByToken(refreshToken);
 
     if (!currentRefreshToken) {
-      console.log(errors.TOKEN_DOES_NOT_EXISTS);
-
-      return;
+      throw new UnauthorizedException(errors.TOKEN_DOES_NOT_EXISTS);
     }
 
     const { accessToken, refreshToken: newRefreshToken } = await this.getTokens(

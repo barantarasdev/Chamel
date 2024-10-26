@@ -1,1 +1,1 @@
-export * as errors from './constants/errors';
+export * as errors from './constants/errors.constant';

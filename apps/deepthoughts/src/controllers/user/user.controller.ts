@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UsePipes,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -18,6 +19,8 @@ import { UserService } from './user.service';
 import { UserT } from '../../types/user';
 import { CreateUserDTO } from './dto/user-create.dto';
 import { UpdateUserDTO } from './dto/user-update.dto';
+import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
+import { userValidation } from '@libs/validation';
 
 @ApiTags('User')
 @Controller('user')
@@ -35,6 +38,7 @@ export class UserController {
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({ status: 201, type: UserT })
   @ApiBody({ type: CreateUserDTO })
+  @UsePipes(new ZodValidationPipe(userValidation.createUserSchema))
   @Post()
   createUser(@Body() dto: CreateUserDTO): Promise<UserT> {
     return this.userService.createUser(dto);
@@ -43,7 +47,8 @@ export class UserController {
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 200, type: UserT })
   @ApiParam({ name: 'userId', required: true, description: 'User id' })
-  @ApiBody({ type: CreateUserDTO })
+  @ApiBody({ type: UpdateUserDTO })
+  @UsePipes(new ZodValidationPipe(userValidation.updateUserSchema))
   @Put('/:userId')
   updateUser(
     @Param('userId') userId: string,
