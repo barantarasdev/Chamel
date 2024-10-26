@@ -8,6 +8,8 @@ import {
   GetRefreshTokenT,
   UpdateRefreshTokenT,
 } from '../types/auth';
+import { MessageT, UpdateMessageT } from '../types/message';
+import { CreateMessageDTO } from '../controllers/message/dto/message-create.dto';
 
 dotenv.config({ path: `apps/deepthoughts/.env.test` });
 
@@ -134,5 +136,53 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
         token,
       },
     }));
+  }
+
+  // Message
+
+  async getMessage(messageId: string): Promise<MessageT | null> {
+    return await this.message.findUnique({
+      where: { id: messageId },
+      select: {
+        id: true,
+        text: true,
+        senderId: true,
+        receiverId: true,
+      },
+    });
+  }
+
+  async createMessage(dto: CreateMessageDTO): Promise<MessageT> {
+    return await this.message.create({
+      data: dto,
+      select: {
+        id: true,
+        senderId: true,
+        receiverId: true,
+        text: true,
+      },
+    });
+  }
+
+  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageT> {
+    return await this.message.update({
+      where: { id: messageId },
+      data: dto,
+      select: {
+        id: true,
+        text: true,
+        senderId: true,
+        receiverId: true,
+      },
+    });
+  }
+
+  async removeMessage(messageId: string): Promise<Pick<MessageT, 'id'> | null> {
+    return await this.message.delete({
+      where: { id: messageId },
+      select: {
+        id: true,
+      },
+    });
   }
 }

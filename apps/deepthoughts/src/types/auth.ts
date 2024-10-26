@@ -1,13 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import Chance from 'chance';
 import { UserT } from './user';
 
-const chance = new Chance();
-
 export class TokenT {
-  @ApiProperty({ example: chance.hash(), description: 'accessToken' })
+  @ApiProperty({
+    example: 'fc6500f7-32f7-4eaf-950b-e8513e844f9a',
+    description: 'accessToken',
+  })
   accessToken: string;
-  @ApiProperty({ example: chance.hash(), description: 'refreshToken' })
+  @ApiProperty({
+    example: 'fc6500f7-32f7-4eaf-950b-e8513e844f9a',
+    description: 'refreshToken',
+  })
   refreshToken: string;
 }
 
