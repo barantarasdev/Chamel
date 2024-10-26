@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import Chance from 'chance';
 import { CreateUserDTO } from '../controllers/user/dto/user-create.dto';
 import { UpdateUserDTO } from '../controllers/user/dto/user-update.dto';
 
-const chance = new Chance();
-
 export class UserT {
-  @ApiProperty({ example: chance.guid(), description: 'User id' })
+  @ApiProperty({
+    example: 'fc6500f7-32f7-4eaf-950b-e8513e844f9a',
+    description: 'User id',
+  })
   id: string;
-  @ApiProperty({ example: chance.name(), description: 'User name' })
+  @ApiProperty({ example: 'name', description: 'User name' })
   name: string;
-  @ApiProperty({ example: chance.email(), description: 'User email' })
+  @ApiProperty({ example: 'mail@mail.com', description: 'User email' })
   email: string;
 }
 

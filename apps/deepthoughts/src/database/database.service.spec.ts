@@ -149,4 +149,126 @@ describe('Database', () => {
       expect(isBlacklisted).toBeTruthy();
     });
   });
+
+  describe('Message', () => {
+    it('should create a message', async () => {
+      const sender = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const receiver = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const senderId = sender.id;
+      const receiverId = receiver.id;
+      const text = chance.sentence();
+
+      const createdMessage = await database.createMessage({
+        senderId,
+        receiverId,
+        text,
+      });
+
+      expect(createdMessage).toEqual({
+        id: createdMessage.id,
+        senderId,
+        receiverId,
+        text,
+      });
+    });
+
+    it('should get a message by ID', async () => {
+      const sender = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const receiver = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const senderId = sender.id;
+      const receiverId = receiver.id;
+      const text = chance.sentence();
+      const createdMessage = await database.createMessage({
+        senderId,
+        receiverId,
+        text,
+      });
+
+      const fetchedMessage = await database.getMessage(createdMessage.id);
+
+      expect(fetchedMessage).toEqual({
+        id: createdMessage.id,
+        senderId,
+        receiverId,
+        text,
+      });
+    });
+
+    it('should update a message', async () => {
+      const sender = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const receiver = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const senderId = sender.id;
+      const receiverId = receiver.id;
+      const initialText = chance.sentence();
+      const newText = chance.sentence();
+
+      const createdMessage = await database.createMessage({
+        senderId,
+        receiverId,
+        text: initialText,
+      });
+      const updatedMessage = await database.updateMessage({
+        messageId: createdMessage.id,
+        dto: { text: newText },
+      });
+
+      expect(updatedMessage).toEqual({
+        id: createdMessage.id,
+        senderId,
+        receiverId,
+        text: newText,
+      });
+    });
+
+    it('should delete a message', async () => {
+      const sender = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const receiver = await database.createUser({
+        name: chance.name(),
+        email: chance.email(),
+        password: chance.string(),
+      });
+      const senderId = sender.id;
+      const receiverId = receiver.id;
+      const text = chance.sentence();
+
+      const createdMessage = await database.createMessage({
+        senderId,
+        receiverId,
+        text,
+      });
+      const deletedMessage = await database.removeMessage(createdMessage.id);
+      const fetchedMessage = await database.getMessage(createdMessage.id);
+
+      expect(deletedMessage).toEqual({ id: createdMessage.id });
+      expect(fetchedMessage).toBeNull();
+    });
+  });
 });

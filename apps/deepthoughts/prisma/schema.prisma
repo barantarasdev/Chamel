@@ -8,19 +8,21 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email     String   @unique
-  name      String
-  password  String   @unique
-  createdAt DateTime @default(now()) @map("created_at")
-  token     Token[]
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email            String    @unique
+  name             String
+  password         String    @unique
+  createdAt        DateTime  @default(now()) @map("created_at")
+  token            Token[]
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
 }
 
 model Token {
   id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   refreshToken String   @unique @map("refresh_token")
   userId       String   @map("user_id") @db.Uuid
-  created_at   DateTime @default(now()) @map("created_at")
+  createdAt    DateTime @default(now()) @map("created_at")
   user         User     @relation(fields: [userId], references: [id])
 }
 
@@ -28,4 +30,14 @@ model Token_blacklist {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   token     String   @unique
   createdAt DateTime @default(now()) @map("created_at")
+}
+
+model Message {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  text       String
+  receiverId String   @map("receiver_id") @db.Uuid
+  senderId   String   @map("sender_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at")
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }

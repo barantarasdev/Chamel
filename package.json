@@ -12,6 +12,7 @@
     "build:web": "cross-env NODE_ENV=production npx nx build web --configuration=production",
     "migrate:dev": "cross-env NODE_ENV=development node apps/deepthoughts/src/scripts/migrate",
     "migrate:prod": "cross-env NODE_ENV=production node apps/deepthoughts/src/scripts/migrate",
+    "seed": "cross-env NODE_ENV=development node apps/deepthoughts/prisma/seeds/seed.js",
     "test": "jest --detectOpenHandles"
   },
   "dependencies": {

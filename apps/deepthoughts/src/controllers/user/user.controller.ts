@@ -42,10 +42,10 @@ export class UserController {
 
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 200, type: UserT })
-  @ApiParam({ name: 'UpdateUserDTO', required: true, description: 'User id' })
+  @ApiParam({ name: 'userId', required: true, description: 'User id' })
   @ApiBody({ type: CreateUserDTO })
   @Put('/:userId')
-  updateTask(
+  updateUser(
     @Param('userId') userId: string,
     @Body() dto: UpdateUserDTO
   ): Promise<UserT> {
@@ -56,7 +56,7 @@ export class UserController {
   @ApiResponse({ status: 200, type: UserT })
   @ApiParam({ name: 'userId', required: true, description: 'User id' })
   @Delete('/:userId')
-  deleteColumn(
+  deleteUser(
     @Param('userId') userId: string
   ): Promise<Pick<UserT, 'id'> | null> {
     return this.userService.removeUser(userId);
