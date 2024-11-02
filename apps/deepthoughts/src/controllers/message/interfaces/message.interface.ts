@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UpdateMessageDTO } from '../controllers/message/dto/message-update.dto';
+import { UpdateMessageDTO } from '../dto/message-update.dto';
 
-export class MessageT {
+export class MessageC {
   @ApiProperty({
     example: 'fc6500f7-32f7-4eaf-950b-e8513e844f9a',
     description: 'Message id',
@@ -21,7 +21,7 @@ export class MessageT {
   receiverId: string;
 }
 
-export type UpdateMessageT = {
+export interface UpdateMessageT {
   dto: UpdateMessageDTO;
   messageId: string;
-};
+}

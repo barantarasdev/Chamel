@@ -13,10 +13,6 @@ if (!migrationName) {
 try {
   execSync(`npx prisma migrate dev --name ${migrationName}`, {
     stdio: 'inherit',
-    env: {
-      ...process.env,
-      NODE_ENV: process.env.NODE_ENV,
-    },
   });
 } catch (error) {
   console.error('Migration failed:', error.message);

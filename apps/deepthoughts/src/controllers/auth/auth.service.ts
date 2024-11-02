@@ -7,11 +7,11 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { SignInDTO } from './dto/sign-in.dto';
-import { TokenT } from '../../types/auth';
 import { SignUpDTO } from './dto/sign-up.dto';
-import { errors } from '@libs/core';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { TokenC } from './interfaces/auth.interface';
+import { errors } from '@libs/core';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +20,7 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async getTokens(id: string, email: string): Promise<TokenT> {
+  async getTokens(id: string, email: string): Promise<TokenC> {
     const payload = {
       sub: id,
       email,
@@ -43,7 +43,7 @@ export class AuthService {
     };
   }
 
-  async signIn(dto: SignInDTO): Promise<TokenT> {
+  async signIn(dto: SignInDTO): Promise<TokenC> {
     const { email, password } = dto;
 
     const user = await this.databaseService.getUserByEmail(email);
@@ -67,7 +67,7 @@ export class AuthService {
     return { refreshToken, accessToken };
   }
 
-  async signUp(dto: SignUpDTO): Promise<TokenT> {
+  async signUp(dto: SignUpDTO): Promise<TokenC> {
     const { email, name, password } = dto;
 
     const user = await this.databaseService.getUserByEmail(dto.email);
@@ -95,7 +95,7 @@ export class AuthService {
     return { refreshToken, accessToken };
   }
 
-  async refresh(refreshToken: string | null): Promise<TokenT> {
+  async refresh(refreshToken: string | null): Promise<TokenC> {
     const currentRefreshToken =
       await this.databaseService.getRefreshTokenByToken(refreshToken);
 

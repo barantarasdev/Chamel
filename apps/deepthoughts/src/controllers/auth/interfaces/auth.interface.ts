@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserT } from './user';
+import { UserC } from '../../user/interfaces/user.interface';
 
-export class TokenT {
+export class TokenC {
   @ApiProperty({
     example: 'fc6500f7-32f7-4eaf-950b-e8513e844f9a',
     description: 'accessToken',
@@ -14,17 +14,23 @@ export class TokenT {
   refreshToken: string;
 }
 
-export type CreateRefreshTokenT = {
+export interface CreateRefreshTokenI {
   userId: string;
   refreshToken: string;
-};
+}
 
-export type GetRefreshTokenT = {
+export interface GetRefreshTokenI {
   userId: string;
-  user: Pick<UserT, 'email'>;
-};
+  user: Pick<UserC, 'email'>;
+}
 
-export type UpdateRefreshTokenT = {
+export interface UpdateRefreshTokenI {
   refreshToken: string;
   newRefreshToken: string;
-};
+}
+
+export interface JwtPayloadI {
+  [key: string]: unknown;
+  sub: string;
+  email: string;
+}

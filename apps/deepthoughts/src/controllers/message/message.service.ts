@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import { MessageT, UpdateMessageT } from '../../types/message';
 import { CreateMessageDTO } from './dto/message-create.dto';
+import { MessageC, UpdateMessageT } from './interfaces/message.interface';
 
 @Injectable()
 export class MessageService {
   constructor(private databaseService: DatabaseService) {}
 
-  async getMessage(messageId: string | null): Promise<MessageT | null> {
+  async getMessage(messageId: string | null): Promise<MessageC | null> {
     return await this.databaseService.getMessage(messageId);
   }
 
-  async createMessage(dto: CreateMessageDTO): Promise<MessageT> {
+  async createMessage(dto: CreateMessageDTO): Promise<MessageC> {
     return await this.databaseService.createMessage(dto);
   }
 
-  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageT> {
+  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageC> {
     return await this.databaseService.updateMessage({ dto, messageId });
   }
 
-  async removeMessage(messageId: string): Promise<Pick<MessageT, 'id'> | null> {
+  async removeMessage(messageId: string): Promise<Pick<MessageC, 'id'> | null> {
     return await this.databaseService.removeMessage(messageId);
   }
 }

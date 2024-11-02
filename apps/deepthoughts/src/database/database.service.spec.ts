@@ -2,6 +2,9 @@ import { PrismaClient } from '@prisma/client';
 import { DatabaseService } from './database.service';
 import { CreateUserDTO } from '../controllers/user/dto/user-create.dto';
 import Chance from 'chance';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: `apps/deepthoughts/.env.test` });
 
 const chance = new Chance();
 const prisma = new PrismaClient();

@@ -2,8 +2,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtPayload } from '../../../../src/types/strategy';
-import { DatabaseService } from '../../../../src/database/database.service';
+import { DatabaseService } from '../../../database/database.service';
+import { JwtPayloadI } from '../interfaces/auth.interface';
+import { errors } from '@libs/core';
 
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
@@ -18,7 +19,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
     });
   }
 
-  async validate(req: Request, payload: JwtPayload) {
+  async validate(req: Request, payload: JwtPayloadI) {
     const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
     const accessToken = req.get('X-Access-Token');
     const isBlacklisted = await this.databaseService.isTokenBlacklisted(
@@ -26,7 +27,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
     );
 
     if (isBlacklisted) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(errors.TOKEN_IS_REVOKED);
     }
 
     return { ...payload, accessToken, refreshToken };

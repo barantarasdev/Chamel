@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'deepthoughts',
   preset: '../../jest.preset.js',

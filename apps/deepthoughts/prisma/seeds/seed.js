@@ -1,16 +1,15 @@
 const { PrismaClient } = require('@prisma/client');
 const dotenv = require('dotenv');
+
+dotenv.config({ path: `apps/deepthoughts/.env.test` });
 const prisma = new PrismaClient();
 
-const env = process.env.NODE_ENV;
-dotenv.config({ path: `apps/deepthoughts/.env.${env}` });
-
 async function main() {
-  const user = await prisma.user.create({
+  const user1 = await prisma.user.create({
     data: {
-      email: 'user@mail.com',
-      name: 'User',
-      password: 'password',
+      email: 'user1@mail.com',
+      name: 'User1',
+      password: 'password1',
     },
   });
 
@@ -24,38 +23,38 @@ async function main() {
 
   await prisma.token.create({
     data: {
-      refreshToken: 'refresh-token',
-      userId: user.id,
+      refreshToken: 'refresh-token1',
+      userId: user1.id,
     },
   });
 
   await prisma.token.create({
     data: {
-      refreshToken: 'refresh-token-2',
+      refreshToken: 'refresh-token2',
       userId: user2.id,
     },
   });
 
   await prisma.message.create({
     data: {
-      text: 'Ha-ha-ha',
-      senderId: user.id,
+      text: 'Hello1',
+      senderId: user1.id,
       receiverId: user2.id,
     },
   });
 
   await prisma.message.create({
     data: {
-      text: 'Ooo-ooo-ooo',
+      text: 'Hello2',
       senderId: user2.id,
-      receiverId: user.id,
+      receiverId: user2.id,
     },
   });
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
   })
   .finally(async () => {

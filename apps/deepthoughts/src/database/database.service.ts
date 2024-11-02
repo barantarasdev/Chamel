@@ -1,17 +1,21 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { GetUserByEmail, UpdateUserT, UserT } from '../types/user';
 import { CreateUserDTO } from '../controllers/user/dto/user-create.dto';
-import dotenv from 'dotenv';
-import {
-  CreateRefreshTokenT,
-  GetRefreshTokenT,
-  UpdateRefreshTokenT,
-} from '../types/auth';
-import { MessageT, UpdateMessageT } from '../types/message';
 import { CreateMessageDTO } from '../controllers/message/dto/message-create.dto';
-
-dotenv.config({ path: `apps/deepthoughts/.env.test` });
+import {
+  GetUserByEmailI,
+  UpdateUserI,
+  UserC,
+} from '../controllers/user/interfaces/user.interface';
+import {
+  CreateRefreshTokenI,
+  GetRefreshTokenI,
+  UpdateRefreshTokenI,
+} from '../controllers/auth/interfaces/auth.interface';
+import {
+  MessageC,
+  UpdateMessageT,
+} from '../controllers/message/interfaces/message.interface';
 
 @Injectable()
 export class DatabaseService extends PrismaClient implements OnModuleInit {
@@ -21,7 +25,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
 
   // User
 
-  async getUserByEmail(email: string): Promise<GetUserByEmail | null> {
+  async getUserByEmail(email: string): Promise<GetUserByEmailI | null> {
     return await this.user.findUnique({
       where: { email },
       select: {
@@ -31,7 +35,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async getUser(userId: string): Promise<UserT | null> {
+  async getUser(userId: string): Promise<UserC | null> {
     return await this.user.findUnique({
       where: { id: userId },
       select: {
@@ -42,7 +46,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async createUser(dto: CreateUserDTO): Promise<UserT> {
+  async createUser(dto: CreateUserDTO): Promise<UserC> {
     return await this.user.create({
       data: dto,
       select: {
@@ -53,7 +57,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async updateUser({ userId, dto }: UpdateUserT): Promise<UserT> {
+  async updateUser({ userId, dto }: UpdateUserI): Promise<UserC> {
     return await this.user.update({
       where: { id: userId },
       data: dto,
@@ -65,7 +69,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async removeUser(userId: string): Promise<Pick<UserT, 'id'> | null> {
+  async removeUser(userId: string): Promise<Pick<UserC, 'id'> | null> {
     return await this.user.delete({
       where: { id: userId },
       select: {
@@ -78,7 +82,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
 
   async getRefreshTokenByToken(
     refreshToken: string
-  ): Promise<GetRefreshTokenT | null> {
+  ): Promise<GetRefreshTokenI | null> {
     return await this.token.findUnique({
       where: { refreshToken },
       select: {
@@ -95,7 +99,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
   async createRefreshToken({
     userId,
     refreshToken,
-  }: CreateRefreshTokenT): Promise<void> {
+  }: CreateRefreshTokenI): Promise<void> {
     await this.token.create({
       data: {
         userId,
@@ -107,7 +111,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
   async updateRefreshToken({
     refreshToken,
     newRefreshToken,
-  }: UpdateRefreshTokenT): Promise<void> {
+  }: UpdateRefreshTokenI): Promise<void> {
     await this.token.update({
       where: { refreshToken },
       data: {
@@ -140,7 +144,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
 
   // Message
 
-  async getMessage(messageId: string): Promise<MessageT | null> {
+  async getMessage(messageId: string): Promise<MessageC | null> {
     return await this.message.findUnique({
       where: { id: messageId },
       select: {
@@ -152,7 +156,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async createMessage(dto: CreateMessageDTO): Promise<MessageT> {
+  async createMessage(dto: CreateMessageDTO): Promise<MessageC> {
     return await this.message.create({
       data: dto,
       select: {
@@ -164,7 +168,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageT> {
+  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageC> {
     return await this.message.update({
       where: { id: messageId },
       data: dto,
@@ -177,7 +181,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async removeMessage(messageId: string): Promise<Pick<MessageT, 'id'> | null> {
+  async removeMessage(messageId: string): Promise<Pick<MessageC, 'id'> | null> {
     return await this.message.delete({
       where: { id: messageId },
       select: {

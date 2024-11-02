@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateUserDTO } from '../controllers/user/dto/user-create.dto';
-import { UpdateUserDTO } from '../controllers/user/dto/user-update.dto';
+import { CreateUserDTO } from '../dto/user-create.dto';
+import { UpdateUserDTO } from '../dto/user-update.dto';
 
-export class UserT {
+export class UserC {
   @ApiProperty({
     example: 'fc6500f7-32f7-4eaf-950b-e8513e844f9a',
     description: 'User id',
@@ -14,16 +14,16 @@ export class UserT {
   email: string;
 }
 
-export type CreateUserT = {
+export interface CreateUserI {
   dto: CreateUserDTO;
-};
+}
 
-export type UpdateUserT = {
+export interface UpdateUserI {
   dto: UpdateUserDTO;
   userId: string;
-};
+}
 
-export type GetUserByEmail = {
+export interface GetUserByEmailI {
   id: string;
   password: string;
-};
+}
