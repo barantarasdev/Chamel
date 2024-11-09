@@ -1,0 +1,58 @@
+@import './variables.scss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+textarea {
+  border: none;
+  outline: none;
+  font: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Roboto';
+  background-color: $primary-background-color;
+  color: $primary-text-color;
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: $primary-border-radius;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary-background-hover-color;
+  border-radius: $primary-border-radius;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-background-hover-color;
+}

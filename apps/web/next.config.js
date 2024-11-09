@@ -1,6 +1,3 @@
-//@ts-check
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
 
 /**
@@ -10,7 +7,6 @@ const nextConfig = {
   nx: {
     svgr: false,
   },
-
   compiler: {
     styledComponents: true,
   },

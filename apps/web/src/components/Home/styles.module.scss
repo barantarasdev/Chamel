@@ -1,0 +1,212 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+//Home
+
+.home {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: $max-width 1fr;
+}
+
+//Aside
+
+.aside {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: $header-height 1fr;
+  border-right: 1px solid $primary-borer-color;
+}
+
+.asideHeader {
+  height: 100%;
+  width: 100%;
+  padding: $primary-gap;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $primary-borer-color;
+  user-select: none;
+}
+
+.asideCards {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  .asideCardsWrapper {
+    max-height: calc(100vh - $header-height);
+    width: 100%;
+    display: flex;
+    padding: $primary-gap;
+    padding-right: $primary-gap;
+    flex-direction: column;
+    gap: $primary-gap;
+    overflow-y: auto;
+  }
+}
+
+.asideCard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $primary-gap;
+  border-radius: $primary-border-radius;
+  transition: background-color $primary-transition-time;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $primary-background-hover-color;
+  }
+
+  .asideCardInfoWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $primary-gap;
+    overflow: hidden;
+
+    .asideCardInfoTitle {
+      width: auto;
+      font-weight: $secondary-font-weight;
+      font-size: $secondary-font-size;
+
+      @include text-ellipsis;
+    }
+
+    .asideCardInfoSubtitle {
+      width: auto;
+      font-size: $text-font-size;
+      font-weight: $text-font-weight;
+      color: $secondary-text-color;
+
+      @include text-ellipsis;
+    }
+  }
+}
+
+.activeAsideCard {
+  background-color: $primary-background-own-color !important;
+}
+
+//Content
+
+.content {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: $header-height 1fr;
+  overflow: hidden;
+
+  background-image: url('/images/bg.jpg');
+  background-size: cover;
+  background-position: center;
+
+  .contentMain {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    .contentMainScroll {
+      max-height: calc(100vh - $header-height - $input-height);
+      overflow-y: auto;
+      padding: $primary-gap;
+      padding-bottom: calc($primary-gap - $primary-gap);
+      margin-bottom: $primary-gap;
+    }
+  }
+}
+
+.contentHeader {
+  height: 100%;
+  width: 100%;
+  padding: $primary-gap;
+  display: flex;
+  align-items: center;
+  gap: $primary-gap;
+  border-bottom: 1px solid $primary-borer-color;
+  background-color: rgba($primary-background-color, 0.6);
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+
+  .contentHeaderTitle {
+    width: auto;
+    font-weight: $secondary-font-weight;
+    font-size: $secondary-font-size;
+
+    @include text-ellipsis;
+  }
+}
+
+.contentMessages {
+  max-width: $content-width;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $primary-gap;
+}
+
+.contentMessage {
+  max-width: $max-width;
+  padding: $primary-gap;
+  background-color: $primary-background-color;
+  border-radius: $primary-border-radius;
+
+  .contentMessageIext {
+    font-size: $text-font-size;
+    font-weight: $text-font-weight;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+}
+
+.activeContentMessage {
+  align-self: flex-end;
+  background-color: $primary-background-own-color;
+}
+
+.contentMessagesFooter {
+  width: 100%;
+  max-width: $content-width;
+  padding-bottom: $primary-gap;
+  margin: 0 auto;
+
+  .contentMessagesFooterWrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    gap: $primary-gap;
+
+    .contentMessagesFooterSendIconWrapper {
+      max-width: $avatar-size;
+      max-height: $avatar-size;
+      min-width: $avatar-size;
+      min-height: $avatar-size;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      background-color: rgba($primary-background-color, 0.6);
+      overflow: hidden;
+    }
+  }
+}
+
+.contentMessagesFooterInput {
+  width: 100%;
+  height: $input-height;
+  padding: 20px;
+  color: $primary-text-color;
+  font-size: $text-font-size;
+  font-weight: $text-font-weight;
+  border-radius: $primary-border-radius;
+  background-color: rgba($primary-background-color, 0.6);
+  resize: none;
+  overflow-y: auto;
+}

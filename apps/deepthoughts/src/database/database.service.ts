@@ -14,7 +14,7 @@ import {
 } from '../controllers/auth/interfaces/auth.interface';
 import {
   MessageC,
-  UpdateMessageT,
+  UpdateMessageI,
 } from '../controllers/message/interfaces/message.interface';
 
 @Injectable()
@@ -168,7 +168,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageC> {
+  async updateMessage({ messageId, dto }: UpdateMessageI): Promise<MessageC> {
     return await this.message.update({
       where: { id: messageId },
       data: dto,

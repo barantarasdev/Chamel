@@ -1,0 +1,14 @@
+@import '../../styles/variables.scss';
+
+.logo {
+  max-width: $avatar-size;
+  max-height: $avatar-size;
+  min-width: $avatar-size;
+  min-height: $avatar-size;
+
+  .logoImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

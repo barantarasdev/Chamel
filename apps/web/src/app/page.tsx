@@ -1,5 +1,8 @@
-import Main from '../components/Home';
+import { memo } from 'react';
+import Home from '../components/Home';
 
-export default function Home() {
-  return <Main />;
+function Main() {
+  return <Home />;
 }
+
+export default memo(Main);

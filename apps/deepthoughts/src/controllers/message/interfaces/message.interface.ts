@@ -21,7 +21,7 @@ export class MessageC {
   receiverId: string;
 }
 
-export interface UpdateMessageT {
+export interface UpdateMessageI {
   dto: UpdateMessageDTO;
   messageId: string;
 }

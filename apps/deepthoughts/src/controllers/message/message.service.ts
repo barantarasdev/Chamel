@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { CreateMessageDTO } from './dto/message-create.dto';
-import { MessageC, UpdateMessageT } from './interfaces/message.interface';
+import { MessageC, UpdateMessageI } from './interfaces/message.interface';
 
 @Injectable()
 export class MessageService {
@@ -15,7 +15,7 @@ export class MessageService {
     return await this.databaseService.createMessage(dto);
   }
 
-  async updateMessage({ messageId, dto }: UpdateMessageT): Promise<MessageC> {
+  async updateMessage({ messageId, dto }: UpdateMessageI): Promise<MessageC> {
     return await this.databaseService.updateMessage({ dto, messageId });
   }
 

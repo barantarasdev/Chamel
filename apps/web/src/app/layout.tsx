@@ -1,23 +1,16 @@
 import Layout from '../components/Layout';
-import { StyledComponentsRegistry } from './registry';
+import { DEFAULT_LANGUAGE } from '../constants';
+import { ROBOTO } from '../constants/font';
+import '../styles/global.scss';
 
-export const metadata = {
-  title: 'Welcome to Chamel',
-  description: 'Chamel',
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
-        <StyledComponentsRegistry>
-          <Layout>{children}</Layout>
-        </StyledComponentsRegistry>
+    <html lang={DEFAULT_LANGUAGE}>
+      <body className={ROBOTO.className}>
+        <Layout>{children}</Layout>
       </body>
     </html>
   );
 }
+
+export default RootLayout;
