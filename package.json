@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "prisma": {
-    "schema": "apps/deepthoughts/prisma/schema.prisma"
+    "schema": "apps/backend/prisma/schema.prisma"
   },
   "scripts": {
-    "start:nest": "npx nx serve deepthoughts --configuration=development",
-    "start:web": "npx nx dev web --configuration=development",
-    "build:nest": "cross-env NODE_ENV=production npx nx build deepthoughts --configuration=production",
-    "build:web": "cross-env NODE_ENV=production npx nx build web --configuration=production",
-    "migrate": "node apps/deepthoughts/src/scripts/migrate.js",
-    "seed": "node apps/deepthoughts/prisma/seeds/seed.js",
-    "test": "jest --detectOpenHandles"
+    "start:frontend": "npx nx dev frontend --configuration=development",
+    "start:backend": "npx nx serve backend --configuration=development",
+    "build:backend": "cross-env NODE_ENV=production npx nx build backend --configuration=production",
+    "build:frontend": "cross-env NODE_ENV=production npx nx build frontend --configuration=production",
+    "lint:frontend": "npx nx lint frontend",
+    "lint:backend": "npx nx lint backend",
+    "generate:api": "openapi-generator-cli generate -i http://localhost:3000/api-json -g typescript-fetch -o ./apps/frontend/.generated",
+    "migrate": "node apps/backend/src/scripts/migrate.js",
+    "seed": "node apps/backend/prisma/seeds/seed.js",
+    "test": "npx nx test"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.2",
@@ -22,8 +25,7 @@
     "@nestjs/platform-socket.io": "^10.4.6",
     "@nestjs/swagger": "^7.4.0",
     "@nestjs/websockets": "^10.4.6",
-    "@prisma/client": "^5.19.1",
-    "@types/bcrypt": "^5.0.2",
+    "@prisma/client": "^5.22.0",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
     "chance": "^1.1.12",
@@ -37,8 +39,8 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "sass": "^1.80.6",
+    "socket.io-client": "^4.8.1",
     "tslib": "^2.3.0",
-    "yup": "^1.4.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -58,10 +60,12 @@
     "@nx/web": "19.6.5",
     "@nx/webpack": "19.6.5",
     "@nx/workspace": "19.6.5",
+    "@openapitools/openapi-generator-cli": "^2.15.3",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@testing-library/react": "15.0.6",
+    "@types/bcrypt": "^5.0.2",
     "@types/chance": "^1.1.6",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.12",
@@ -94,7 +98,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "prettier": "^2.6.2",
-    "prisma": "^5.19.1",
+    "prisma": "^5.22.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",

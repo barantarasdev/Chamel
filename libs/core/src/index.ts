@@ -1,1 +1,2 @@
-export * as errors from './constants/errors.constant';
+export * as authValidation from './validations/auth'
+export * as messageValidation from './validations/message'

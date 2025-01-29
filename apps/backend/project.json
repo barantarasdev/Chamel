@@ -1,0 +1,46 @@
+{
+  "name": "backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "backend:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backend:build:development"
+        },
+        "production": {
+          "buildTarget": "backend:build:production"
+        }
+      }
+    },
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "defaultConfiguration": "development",
+      "options": {
+        "webpackConfig": "apps/backend/webpack.config.js",
+        "outputPath": "dist/apps/backend",
+        "main": "apps/backend/src/main.ts",
+        "tsConfig": "apps/backend/tsconfig.json"
+      },
+      "configurations": {
+        "development": {
+          "sourceMap": true,
+          "optimization": false
+        },
+        "production": {
+          "sourceMap": false,
+          "optimization": true
+        }
+      }
+    }
+  }
+}

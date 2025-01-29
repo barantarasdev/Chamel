@@ -1,0 +1,17 @@
+.openapi-generator-ignore
+apis/AuthApi.ts
+apis/MessageApi.ts
+apis/UserApi.ts
+apis/index.ts
+index.ts
+models/CreateMessageDTO.ts
+models/CreateUserDTO.ts
+models/CMessage.ts
+models/SignInDTO.ts
+models/SignUpDTO.ts
+models/TokenC.ts
+models/UpdateMessageDTO.ts
+models/UpdateUserDTO.ts
+models/UserC.ts
+models/index.ts
+runtime.ts
