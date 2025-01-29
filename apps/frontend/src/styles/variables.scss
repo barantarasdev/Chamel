@@ -1,0 +1,21 @@
+$primary-background-color: rgb(33, 33, 33);
+$primary-background-own-color: rgb(119 157 3);
+$primary-background-hover-color: rgb(44, 44, 44);
+$primary-text-color: rgb(255, 255, 255);
+$secondary-text-color: rgb(236, 236, 236);
+$primary-borer-color: rgb(48, 48, 48);
+$primary-border-radius: 10px;
+$primary-transition-time: 0.15s;
+$primary-gap: 10px;
+$primary-font-size: 20px;
+$secondary-font-size: 17px;
+$text-font-size: 14px;
+$primary-font-weight: 500;
+$secondary-font-weight: 400;
+$text-font-weight: 300;
+$max-width: 400px;
+$header-height: 80px;
+$input-height: 56px;
+//Also need to change for GENERAL_ICON_SIZE constant in (apps/frontend/src/constants/index.ts)
+$avatar-size: 62px;
+$content-width: 700px;
